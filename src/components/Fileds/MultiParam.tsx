@@ -3,14 +3,13 @@ import { useObjectToEdit } from '../../state/objectToEdit';
 import Input from './Input';
 import Button from '../Ui/Button';
 
-const MultiParam = () => {
-  const { objectToEdit, setObjectToEdit } = useObjectToEdit(); 
+const MultiParam = ({objectToEdit}:{objectToEdit:any}) => {
+  const { setObjectToEdit } = useObjectToEdit(); 
   const [params, setParams] = useState<{ key: string; value: string }[]>(objectToEdit?.params || []);
 
   useEffect(() => {
-    // Avoid infinite loop by checking if params have changed
-    if (JSON.stringify(params) !== JSON.stringify(objectToEdit?.params)) {
-      setObjectToEdit({ ...objectToEdit, params });
+    if (JSON.stringify(params) !== JSON.stringify(objectToEdit?.params)) {      
+      setObjectToEdit({ ...objectToEdit, params });  
     }
   }, [params, setObjectToEdit, objectToEdit]);
 
@@ -32,8 +31,8 @@ const MultiParam = () => {
   return (
     <div>
       {params.map((param, index) => (
-        <div key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-          <Input
+        <div key={index} className='d-flex m-10'>
+          <Input  
             name={`key-${index}`}
             placeholder="key"
             type="text"

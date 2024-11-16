@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { useGetAllBranches } from '../../api/branch';
 import { useGetAllCycles } from '../../api/cycle';
 import { useGetAllTerms } from '../../api/term';
@@ -11,31 +12,42 @@ const ThirdStep = ({
   objectToEdit, 
 }:CheckoutSteps) => {
 
-  const {data:Branch} = useGetAllBranches();
+  const {data:Branch,isLoading} = useGetAllBranches();
   const {data:Term} = useGetAllTerms();
   const {data:Cycle} = useGetAllCycles();
+  const [termDisabled, setTermDisabled] = useState(!objectToEdit?.branch_id);
+  const [cycleDisabled, setCycleDisabled] = useState(false);
 
+  useEffect(() => {
+    !objectToEdit?.branch_id ? setTermDisabled(true) : setTermDisabled(false);
+    !objectToEdit?.term_id ? setCycleDisabled(true): setCycleDisabled(false);
+  }, [objectToEdit?.branch_id,objectToEdit?.term_id])
+  
   return (
     CurrentIndex == 2 &&
     <div className='flex-column w-100'>
       <h1>ThirdStep</h1>
-      <Select 
+      {isLoading ? "loading..." :
+      <>
+        <Select 
         name="branch_id" 
         option={Branch?.data?.data}
         onChange={onChange}
-      />
-      <Select 
+        />
+        <Select 
         name="term_id" 
         option={Term?.data?.data}
         onChange={onChange}
-        disabled={!objectToEdit?.branch_id}
-      />
-      <Select 
+        disabled={termDisabled}
+        />
+        <Select 
         name="cycle_id" 
         option={Cycle?.data?.data}
         onChange={onChange}
-        disabled={!objectToEdit?.term_id}
-      />
+        disabled={cycleDisabled}
+        />
+      </>
+      }
       <Button onClick={()=>console.log(objectToEdit)}>
         Submit
       </Button>

@@ -1,11 +1,11 @@
-  import React from 'react'
-  import FirstStep from './FirstStep';
-  import ThirdStep from './ThirdStep';
-  import storeDataInState from '../../utils/storeDataInState';
-  import { useObjectToEdit } from '../../state/objectToEdit';
-  import { useSetCheckoutIndex } from '../../state/CheckoutProcessIndex';
-  import SecondStep from './SecondStep';
-  import { CheckoutProcess } from '../../enums/CheckoutProcess';
+import React from 'react'
+import FirstStep from './FirstStep';
+import ThirdStep from './ThirdStep';
+import storeDataInState from '../../utils/storeDataInState';
+import { useObjectToEdit } from '../../state/objectToEdit';
+import { useSetCheckoutIndex } from '../../state/CheckoutProcessIndex';
+import SecondStep from './SecondStep';
+import { CheckoutProcess } from '../../enums/CheckoutProcess';
 import Button from '../../components/Ui/Button';
 
   const Page = () => {
@@ -23,13 +23,13 @@ import Button from '../../components/Ui/Button';
       const handleStore = (e: React.ChangeEvent<any>) => {
         storeDataInState(setObjectToEdit, { [e.target.name]: e.target.value });    
       };
-    
+
       const Forms = {
         [CheckoutProcess.First]: (
           <FirstStep onChange={handleStore} CurrentIndex={CurrentIndex} objectToEdit={objectToEdit}/>
         ),
         [CheckoutProcess.Second]: (
-          <SecondStep onChange={handleStore} CurrentIndex={CurrentIndex} objectToEdit={objectToEdit}/>
+          <SecondStep CurrentIndex={CurrentIndex} objectToEdit={objectToEdit}/>
         ),
         [CheckoutProcess.Third]: (
           <ThirdStep onChange={handleStore} CurrentIndex={CurrentIndex} objectToEdit={objectToEdit}/>
@@ -38,7 +38,7 @@ import Button from '../../components/Ui/Button';
 
     return (
       <div className='d-flex'>
-        <Button onClick={PrevStep}>
+        <Button onClick={PrevStep} disabled={CurrentIndex <=0}>
           prev
         </Button>
         
@@ -48,7 +48,7 @@ import Button from '../../components/Ui/Button';
           {Forms[CheckoutProcess.Third]}
         </div>
 
-        <Button onClick={NextStep}>
+        <Button onClick={NextStep} disabled={CurrentIndex >=2}>
           next
         </Button>
       

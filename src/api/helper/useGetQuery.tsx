@@ -18,8 +18,8 @@ const useGetQuery = (
                 BaseUrl + url,
                 {
                     params: params
-                })
-                return response;
+                });
+                return response || [];
         },
         {
             ...options

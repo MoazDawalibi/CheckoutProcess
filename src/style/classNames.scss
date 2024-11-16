@@ -10,6 +10,7 @@
     justify-content: center;
     flex-direction: column;
     gap: 30px;
+    padding: 10px;
 }
 
 .w-100{
@@ -20,8 +21,26 @@
     margin: 100px;
 }
 
+.m-10{
+    margin: 10px;
+}
+
 .select_field,.input_field{
     width: 300px;
     padding: 20px 20px;
     font-size: 20px; 
+}
+
+
+.file_image{
+    width: 200px;
+    height: 200px;
+}
+
+.icon{
+    color: gray;
+    background: #000;
+    font-size: 30px;
+    cursor: pointer;
+    margin: 10px;
 }

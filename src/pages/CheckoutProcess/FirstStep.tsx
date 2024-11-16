@@ -6,7 +6,7 @@ const FirstStep = ({
   CurrentIndex,
   objectToEdit, 
 }:CheckoutSteps) => {
-  
+
   return (
     CurrentIndex == 0 &&
     <div className='flex-column w-100'> 
