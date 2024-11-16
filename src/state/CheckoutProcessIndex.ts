@@ -4,7 +4,6 @@ interface StateType {
   CurrentIndex: any; 
   setNextCurrentIndex: () => void; 
   setPrevCurrentIndex: () => void; 
-
 }
 
 export const useSetCheckoutIndex = create<StateType>((set) => ({

@@ -1,5 +1,4 @@
 import { useQuery } from "react-query";
-import { BaseUrl } from "../../config/config";
 import useAxios from './useAxios'
 
 const useGetQuery = (
@@ -10,12 +9,13 @@ const useGetQuery = (
 ) => {
 
     const axios = useAxios();
-
+    console.log(params);
+    
     return useQuery(
         key,
         async () => {
             const response = await axios.get(
-                BaseUrl + url,
+                url,
                 {
                     params: params
                 });

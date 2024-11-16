@@ -1,72 +1,51 @@
-import React, { useState } from "react";
+import React from "react";
 import { formatToLabelValue } from "../../utils/formatToLableValue";
 import { BiTrash } from "react-icons/bi";
-import { useObjectToEdit } from "../../state/objectToEdit";
+import { FieldsState, OptionType } from "../../type/Fildes";
 
-interface OptionType {
-  label: string;
-  value: string;
-}
 
-interface FieldsState {
-  name: string;
-  option: OptionType[];
-  defaultValue?: string;
-  disabled?: boolean;
-  className?: string;
-  onChange?: (e: React.ChangeEvent<any>) => void;
-}
 
 const Select: React.FC<FieldsState> = ({
   name,
   option,
-  defaultValue,
+  value,
   disabled,
+  onChange,
   className,
+  loading,
 }) => {
-  const FormatOption = formatToLabelValue(option);
-  const [value, setValue] = useState(defaultValue || "");
-  const { setObjectToEdit, objectToEdit } = useObjectToEdit();
-
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const newValue = e.target.value;
-    setValue(newValue); 
-    setObjectToEdit({
-      ...objectToEdit,
-      [name]: newValue,
-    });
-  };
-
-  const handleClear = () => {
-    setValue(""); 
-    setObjectToEdit({
-      ...objectToEdit,
-      [name]: null, 
-    });
-  };
+  const formattedOptions = formatToLabelValue(option);
 
   return (
-    <div className="d-flex">
+    <div className="d-flex align-items-center">
       <select
         className={`${className} select_field`}
         name={name}
-        onChange={handleChange}
+        onChange={onChange}
         value={value}
-        disabled={disabled}
+        disabled={disabled || loading}
       >
-        <option disabled value="">
-          Select {name}
-        </option>
-        {FormatOption?.map((opt: OptionType) => (
-          <option key={opt.value} value={opt.value}>
-            {opt.label}
+        {loading ? (
+          <option disabled value="">
+            Loading {name}...
           </option>
-        ))}
+        ) : (
+          <>
+            <option disabled value="">
+              Select {name}
+            </option>
+            {formattedOptions?.map((opt: OptionType) => (
+              <option key={opt.value} value={opt.value}>
+                {opt.label}
+              </option>
+            ))}
+          </>
+        )}
       </select>
-      {value && (
+      {!loading && value && !disabled && (
         <BiTrash
           className="icon"
-          onClick={handleClear}
+          onClick={() => onChange({ target: { name, value: null } } as any)}
         />
       )}
     </div>
