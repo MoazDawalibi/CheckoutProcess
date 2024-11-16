@@ -1,0 +1,27 @@
+.d-flex{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flex-column{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.w-100{
+    width: 700px;
+}
+
+.m-100{
+    margin: 100px;
+}
+
+.select_field,.input_field{
+    width: 300px;
+    padding: 20px 20px;
+    font-size: 20px; 
+}
